@@ -8,3 +8,6 @@ for customer in customers:
         print (f"{name}様：至急アプローチ！")
     else:
         print(f"{name}様：時期尚早")
+
+        # リストの長さを測る len 関数を使ってみる
+print(f"本日のアプローチ件数：{len(customers)}件")

@@ -1,12 +1,9 @@
 import qrcode
 
-# 1. QRコードにしたい情報（例えば自社の紹介ページや、顧客IDなど）
-data = "https://www.google.com" # ここを自由に変えられます
+# ユーザーから入力を受け取る
+data = input("QRコードにしたい文字やURLを入力してください: ")
 
-# 2. QRコードの生成
 img = qrcode.make(data)
+img.save('test_qr.png')
 
-# 3. 画像として保存
-img.save("test_qr.png")
-
-print("QRコード『test_qr.png』を作成しました！")
+print(f"QRコード『test_qr.png』を作成しました！（中身: {data}）")

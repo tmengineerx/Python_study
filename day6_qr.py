@@ -1,9 +1,14 @@
 import qrcode
 
-# ユーザーから入力を受け取る
-data = input("QRコードにしたい文字やURLを入力してください: ")
+data = input("QRコードにしたい文字を入力: ")
 
-img = qrcode.make(data)
+# QRコードの設定
+qr = qrcode.QRCode(box_size=10, border=4)
+qr.add_data(data)
+qr.make(fit=True)
+
+# ★ ここで色を指定！ (好きな色に変えてみてください)
+img = qr.make_image(fill_color="darkblue", back_color="white")
+
 img.save('test_qr.png')
-
-print(f"QRコード『test_qr.png』を作成しました！（中身: {data}）")
+print(f"『{data}』のQRコードを青色で作成しました！")

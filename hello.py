@@ -1,41 +1,30 @@
 import flet as ft
 
 def main(page: ft.Page):
-    page.title = "営業マンの挨拶ツール"
-    page.theme_mode = ft.ThemeMode.LIGHT # 明るいモードに変更
-    page.vertical_alignment = ft.MainAxisAlignment.CENTER
-    page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
-
-    name_input = ft.TextField(
-        label="お名前を入力してください", 
-        width=300,
-        hint_text="例：田中 太郎",
-        # Enterキーを押した時に実行
-        on_submit=lambda _: on_greet_click(None) 
-    )
+    page.title = "学習ログ生成ツール"
+    page.theme_mode = ft.ThemeMode.LIGHT
     
-    hello_text = ft.Text(value="", size=25, weight="bold", color="blue")
+    # 入力フィールド
+    task_input = ft.TextField(label="実施したタスクを入力", width=400)
+    log_display = ft.TextField(
+        label="生成されたログ", 
+        multiline=True, 
+        min_lines=5, 
+        read_only=True
+    )
 
-    def on_greet_click(e):
-        if not name_input.value:
-            name_input.error_text = "名前を入力してください"
-            page.update()
-        else:
-            hello_text.value = f"✨ こんにちは、{name_input.value}様！ ✨"
-            name_input.error_text = None
+    def on_generate_click(e):
+        if task_input.value:
+            # 既存のログ形式に整形
+            formatted_log = f"✅ 実施済みタスク\n[x] {task_input.value}"
+            log_display.value = formatted_log
             page.update()
 
     page.add(
-        ft.Icon(ft.Icons.PERSON_PIN, color="blue", size=50), # アイコン追加
-        name_input,
-        ft.ElevatedButton(
-            "挨拶する", 
-            icon=ft.Icons.SEND, # 送信アイコン追加
-            on_click=on_greet_click, 
-            bgcolor="red", 
-            color="white"
-        ),
-        hello_text
+        ft.Text("学習ログ作成アシスタント", size=20, weight="bold"),
+        task_input,
+        ft.ElevatedButton("ログを生成", on_click=on_generate_click),
+        log_display
     )
 
 ft.app(target=main)
